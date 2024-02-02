@@ -15,6 +15,8 @@ variable "env" {
   description = "Deployment Environment"
 }
 
-
-
-
+variable "public_subnet_cidr" {
+  default     = "172.31.96.0/20"
+  type        = string
+  description = "Public Subnet CIDR"
+}

@@ -29,11 +29,22 @@ module "globalvars" {
   source = "../../modules/globalvars"
 }
 
+resource "aws_subnet" "public_subnet" {
+  vpc_id            = data.aws_vpc.default.id
+  cidr_block        = var.public_subnet_cidr
+  tags = merge(local.default_tags,
+    {
+      "Name" = "${local.name_prefix}-public-subnet"
+    }
+  )
+}
+
 resource "aws_instance" "my_amazon" {
   ami                         = data.aws_ami.latest_amazon_linux.id
   instance_type               = lookup(var.instance_type, var.env)
   key_name                    = aws_key_pair.my_key.key_name
   vpc_security_group_ids      = [aws_security_group.my_sg.id]
+  subnet_id                   = aws_subnet.public_subnet.id
   associate_public_ip_address = false
 
   lifecycle {
