@@ -130,3 +130,17 @@ resource "aws_eip" "static_eip" {
     }
   )
 }
+
+resource "aws_ecr_repository" "mysql" {
+  name         = "${local.name_prefix}-mysql"
+  tags = {
+    Name = "${local.name_prefix}-mysql"
+  }
+}
+
+resource "aws_ecr_repository" "application" {
+  name         = "${local.name_prefix}-app"
+  tags = {
+    Name = "${local.name_prefix}-app"
+  }
+}
