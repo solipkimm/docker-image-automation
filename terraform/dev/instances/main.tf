@@ -33,7 +33,7 @@ resource "aws_instance" "my_amazon" {
   ami                         = data.aws_ami.latest_amazon_linux.id
   instance_type               = lookup(var.instance_type, var.env)
   key_name                    = aws_key_pair.my_key.key_name
-  vpc_security_group_ids             = [aws_security_group.my_sg.id]
+  vpc_security_group_ids      = [aws_security_group.my_sg.id]
   associate_public_ip_address = false
 
   lifecycle {
@@ -77,10 +77,11 @@ resource "aws_security_group" "my_sg" {
 
   ingress {
     description      = "Custom port 8080"
-    from_port        = 8081
-    to_port          = 8081
+    from_port        = 8080
+    to_port          = 8080
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
   
   ingress {
@@ -89,6 +90,7 @@ resource "aws_security_group" "my_sg" {
     to_port          = 8081
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   ingress {
@@ -97,6 +99,7 @@ resource "aws_security_group" "my_sg" {
     to_port          = 8082
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   ingress {
@@ -105,6 +108,7 @@ resource "aws_security_group" "my_sg" {
     to_port          = 8083
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
